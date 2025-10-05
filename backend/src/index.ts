@@ -49,6 +49,7 @@ app.get('/health', (req, res) => {
 
 // Import routes
 import teamsRouter from './routes/teams';
+import matchesRouter from './routes/matches';
 
 // API routes
 app.get('/api/health', (req, res) => {
@@ -73,6 +74,9 @@ app.get('/api/test', (req, res) => {
 
 // Team management routes
 app.use('/api/teams', teamsRouter);
+
+// Match management routes
+app.use('/api/matches', matchesRouter);
 
 // 404 handler
 app.use('*', (req, res) => {

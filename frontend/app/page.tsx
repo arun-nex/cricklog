@@ -78,12 +78,20 @@ export default function Home() {
                 Test Backend Connection
               </button>
               
-              <a
-                href="/teams"
-                className="w-full bg-white text-primary-600 py-2 px-4 rounded-lg border-2 border-primary-600 hover:bg-primary-50 transition-colors block text-center"
-              >
-                🏏 Manage Teams
-              </a>
+                  <div className="space-y-3">
+                    <a
+                      href="/teams"
+                      className="w-full bg-white text-primary-600 py-2 px-4 rounded-lg border-2 border-primary-600 hover:bg-primary-50 transition-colors block text-center"
+                    >
+                      🏏 Manage Teams
+                    </a>
+                    <a
+                      href="/matches"
+                      className="w-full bg-white text-primary-600 py-2 px-4 rounded-lg border-2 border-primary-600 hover:bg-primary-50 transition-colors block text-center"
+                    >
+                      🏆 Manage Matches
+                    </a>
+                  </div>
             </div>
 
             <div className="text-xs text-gray-500 mt-4">
