@@ -7,7 +7,9 @@ export default function Home() {
 
   const testConnection = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/health`)
+      // Use the correct backend URL
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://cricklog-2dk4.vercel.app'
+      const response = await fetch(`${apiUrl}/health`)
       if (response.ok) {
         setIsConnected(true)
       }
@@ -54,8 +56,8 @@ export default function Home() {
             </button>
 
             <div className="text-xs text-gray-500 mt-4">
-              <p>API URL: {process.env.NEXT_PUBLIC_API_URL}</p>
-              <p>App URL: {process.env.NEXT_PUBLIC_APP_URL}</p>
+              <p>API URL: {process.env.NEXT_PUBLIC_API_URL || 'https://cricklog-2dk4.vercel.app'}</p>
+              <p>App URL: {process.env.NEXT_PUBLIC_APP_URL || 'https://cricklog.vercel.app'}</p>
             </div>
           </div>
         </div>
