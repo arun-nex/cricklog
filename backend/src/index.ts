@@ -47,6 +47,9 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Import routes
+import teamsRouter from './routes/teams';
+
 // API routes
 app.get('/api/health', (req, res) => {
   res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
@@ -67,6 +70,9 @@ app.get('/api/test', (req, res) => {
     port: PORT
   });
 });
+
+// Team management routes
+app.use('/api/teams', teamsRouter);
 
 // 404 handler
 app.use('*', (req, res) => {
