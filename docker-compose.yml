@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: registry.digitalocean.com/cricklog/frontend:latest
+    container_name: cricklog-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - API_URL=https://api.cricklog.com
+      - NEXT_PUBLIC_API_URL=https://api.cricklog.com
+    depends_on:
+      - backend
+    networks:
+      - cricklog-network
+
+  backend:
+    image: registry.digitalocean.com/cricklog/backend:latest
+    container_name: cricklog-backend
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - API_PORT=4000
+    depends_on:
+      - redis
+    networks:
+      - cricklog-network
+
+  redis:
+    image: redis:6-alpine
+    container_name: cricklog-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - cricklog-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: cricklog-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./ssl:/etc/ssl/certs
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - cricklog-network
+
+volumes:
+  redis_data:
+
+networks:
+  cricklog-network:
+    driver: bridge
