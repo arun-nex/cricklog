@@ -80,7 +80,7 @@ export default function AddPlayerModal({ teamId, teamName, onClose, onPlayerAdde
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all bg-white text-gray-900 placeholder-gray-500"
+                className="w-full px-4 py-3 border-2 border-gray-400 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-500 focus:border-primary-600 transition-all bg-white text-black placeholder-gray-600 font-medium"
                 placeholder="Enter player name"
                 required
               />
@@ -94,7 +94,7 @@ export default function AddPlayerModal({ teamId, teamName, onClose, onPlayerAdde
                 type="number"
                 value={formData.jersey_number || ''}
                 onChange={(e) => setFormData({ ...formData, jersey_number: e.target.value ? parseInt(e.target.value) : undefined })}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all bg-white text-gray-900 placeholder-gray-500"
+                className="w-full px-4 py-3 border-2 border-gray-400 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-500 focus:border-primary-600 transition-all bg-white text-black placeholder-gray-600 font-medium"
                 placeholder="e.g., 7"
                 min="1"
                 max="99"
@@ -109,7 +109,7 @@ export default function AddPlayerModal({ teamId, teamName, onClose, onPlayerAdde
             <select
               value={formData.role}
               onChange={(e) => setFormData({ ...formData, role: e.target.value as any })}
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all bg-white text-gray-900"
+              className="w-full px-4 py-3 border-2 border-gray-400 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-500 focus:border-primary-600 transition-all bg-white text-black font-medium"
             >
               <option value="batsman">Batsman</option>
               <option value="bowler">Bowler</option>
@@ -126,7 +126,7 @@ export default function AddPlayerModal({ teamId, teamName, onClose, onPlayerAdde
               <select
                 value={formData.batting_style || 'right-handed'}
                 onChange={(e) => setFormData({ ...formData, batting_style: e.target.value as any })}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all bg-white text-gray-900"
+                className="w-full px-4 py-3 border-2 border-gray-400 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-500 focus:border-primary-600 transition-all bg-white text-black font-medium"
               >
                 <option value="right-handed">Right-Handed</option>
                 <option value="left-handed">Left-Handed</option>
@@ -140,7 +140,7 @@ export default function AddPlayerModal({ teamId, teamName, onClose, onPlayerAdde
               <select
                 value={formData.bowling_style || 'right-arm medium'}
                 onChange={(e) => setFormData({ ...formData, bowling_style: e.target.value as any })}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all bg-white text-gray-900"
+                className="w-full px-4 py-3 border-2 border-gray-400 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-500 focus:border-primary-600 transition-all bg-white text-black font-medium"
               >
                 <option value="right-arm fast">Right-Arm Fast</option>
                 <option value="right-arm medium">Right-Arm Medium</option>
