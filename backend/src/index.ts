@@ -16,7 +16,9 @@ app.use(cors({
     process.env.CORS_ORIGIN || '*',
     'https://cricklog.vercel.app',
     'https://cricklog-a8ch1saj6-arun-nexs-projects.vercel.app',
-    'https://cricklog-2dk4.vercel.app'
+    'https://cricklog-nasyk2cuf-arun-nexs-projects.vercel.app',
+    'https://cricklog-2dk4.vercel.app',
+    /^https:\/\/cricklog-.*\.vercel\.app$/
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

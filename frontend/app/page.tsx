@@ -12,15 +12,33 @@ export default function Home() {
       // Remove any trailing slashes and ensure clean URL
       apiUrl = apiUrl.replace(/\/+$/, '')
       
-      console.log('Testing connection to:', `${apiUrl}/health`)
-      const response = await fetch(`${apiUrl}/health`)
+      // Ensure we have a clean URL without double slashes
+      const healthUrl = `${apiUrl}/health`
+      
+      console.log('Testing connection to:', healthUrl)
+      console.log('Current origin:', window.location.origin)
+      
+      const response = await fetch(healthUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        credentials: 'include'
+      })
+      
       console.log('Response status:', response.status)
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()))
       
       if (response.ok) {
+        const data = await response.json()
+        console.log('Response data:', data)
         setIsConnected(true)
         console.log('Backend connection successful!')
       } else {
         console.error('Backend responded with status:', response.status)
+        const errorText = await response.text()
+        console.error('Error response:', errorText)
       }
     } catch (error) {
       console.error('Connection test failed:', error)
