@@ -12,14 +12,31 @@ const PORT = process.env.API_PORT || 4000;
 // Middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || '*',
-  credentials: true
+  origin: [
+    process.env.CORS_ORIGIN || '*',
+    'https://cricklog.vercel.app',
+    'https://cricklog-a8ch1saj6-arun-nexs-projects.vercel.app',
+    'https://cricklog-2dk4.vercel.app'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Handle CORS preflight requests
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200);
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.status(200).json({
     status: 'OK',
     message: 'Cricklog API is running',
@@ -30,6 +47,7 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.get('/api/health', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.status(200).json({
     status: 'OK',
     message: 'Cricklog API is healthy',
@@ -40,6 +58,7 @@ app.get('/api/health', (req, res) => {
 
 // Test endpoint
 app.get('/api/test', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.status(200).json({
     message: 'Cricklog API is working!',
     environment: process.env.NODE_ENV || 'development',
