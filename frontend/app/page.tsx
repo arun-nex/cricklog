@@ -8,10 +8,19 @@ export default function Home() {
   const testConnection = async () => {
     try {
       // Use the correct backend URL and ensure no double slash
-      const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'https://cricklog-2dk4.vercel.app').replace(/\/$/, '')
+      let apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://cricklog-2dk4.vercel.app'
+      // Remove any trailing slashes and ensure clean URL
+      apiUrl = apiUrl.replace(/\/+$/, '')
+      
+      console.log('Testing connection to:', `${apiUrl}/health`)
       const response = await fetch(`${apiUrl}/health`)
+      console.log('Response status:', response.status)
+      
       if (response.ok) {
         setIsConnected(true)
+        console.log('Backend connection successful!')
+      } else {
+        console.error('Backend responded with status:', response.status)
       }
     } catch (error) {
       console.error('Connection test failed:', error)
@@ -56,7 +65,7 @@ export default function Home() {
             </button>
 
             <div className="text-xs text-gray-500 mt-4">
-              <p>API URL: {(process.env.NEXT_PUBLIC_API_URL || 'https://cricklog-2dk4.vercel.app').replace(/\/$/, '')}</p>
+              <p>API URL: {(process.env.NEXT_PUBLIC_API_URL || 'https://cricklog-2dk4.vercel.app').replace(/\/+$/, '')}</p>
               <p>App URL: {process.env.NEXT_PUBLIC_APP_URL || 'https://cricklog.vercel.app'}</p>
             </div>
           </div>
