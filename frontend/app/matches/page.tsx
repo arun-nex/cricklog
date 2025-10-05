@@ -197,6 +197,14 @@ export default function MatchesPage() {
                     Start
                   </button>
                 )}
+                {match.status === 'live' && (
+                  <a
+                    href={`/scoring/${match.id}`}
+                    className="bg-red-500/20 text-red-300 py-3 px-4 rounded-xl font-semibold hover:bg-red-500/30 transition-all duration-300 text-center"
+                  >
+                    Live Score
+                  </a>
+                )}
               </div>
             </div>
           ))}
