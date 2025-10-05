@@ -7,41 +7,36 @@ export default function Home() {
 
   const testConnection = async () => {
     try {
-      // Use the correct backend URL and ensure no double slash
-      let apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://cricklog-2dk4.vercel.app'
-      // Remove any trailing slashes and ensure clean URL
-      apiUrl = apiUrl.replace(/\/+$/, '')
-      
-      // Ensure we have a clean URL without double slashes
+      // Force the correct backend URL without any environment variables
+      const apiUrl = 'https://cricklog-2dk4.vercel.app'
       const healthUrl = `${apiUrl}/health`
       
-      console.log('Testing connection to:', healthUrl)
-      console.log('Current origin:', window.location.origin)
+      console.log('🔍 Testing connection to:', healthUrl)
+      console.log('🌐 Current origin:', window.location.origin)
       
       const response = await fetch(healthUrl, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        mode: 'cors',
-        credentials: 'include'
+        mode: 'cors'
       })
       
-      console.log('Response status:', response.status)
-      console.log('Response headers:', Object.fromEntries(response.headers.entries()))
+      console.log('📊 Response status:', response.status)
+      console.log('📋 Response headers:', Object.fromEntries(response.headers.entries()))
       
       if (response.ok) {
         const data = await response.json()
-        console.log('Response data:', data)
+        console.log('✅ Response data:', data)
         setIsConnected(true)
-        console.log('Backend connection successful!')
+        console.log('🎉 Backend connection successful!')
       } else {
-        console.error('Backend responded with status:', response.status)
+        console.error('❌ Backend responded with status:', response.status)
         const errorText = await response.text()
-        console.error('Error response:', errorText)
+        console.error('💥 Error response:', errorText)
       }
     } catch (error) {
-      console.error('Connection test failed:', error)
+      console.error('🚨 Connection test failed:', error)
     }
   }
 
@@ -70,7 +65,7 @@ export default function Home() {
               <div className="flex items-center justify-center">
                 <div className={`w-3 h-3 rounded-full mr-2 ${isConnected ? 'bg-green-500' : 'bg-yellow-500'}`}></div>
                 <span className="text-sm text-gray-600">
-                  {isConnected ? 'Connected to Railway' : 'Testing connection...'}
+                  {isConnected ? 'Connected to Vercel' : 'Testing connection...'}
                 </span>
               </div>
             </div>
@@ -83,8 +78,8 @@ export default function Home() {
             </button>
 
             <div className="text-xs text-gray-500 mt-4">
-              <p>API URL: {(process.env.NEXT_PUBLIC_API_URL || 'https://cricklog-2dk4.vercel.app').replace(/\/+$/, '')}</p>
-              <p>App URL: {process.env.NEXT_PUBLIC_APP_URL || 'https://cricklog.vercel.app'}</p>
+              <p>API URL: https://cricklog-2dk4.vercel.app</p>
+              <p>App URL: https://cricklog.vercel.app</p>
             </div>
           </div>
         </div>
