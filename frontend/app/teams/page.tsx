@@ -257,7 +257,7 @@ function CreateTeamModal({ onClose, onCreate }: { onClose: () => void; onCreate:
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-4 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-lg"
+              className="w-full px-4 py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all text-lg bg-white text-gray-900 placeholder-gray-500"
               placeholder="Enter team name"
               required
             />
@@ -270,7 +270,7 @@ function CreateTeamModal({ onClose, onCreate }: { onClose: () => void; onCreate:
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-4 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
+              className="w-full px-4 py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all resize-none bg-white text-gray-900 placeholder-gray-500"
               placeholder="Enter team description"
               rows={3}
             />
@@ -284,7 +284,7 @@ function CreateTeamModal({ onClose, onCreate }: { onClose: () => void; onCreate:
               type="text"
               value={formData.captain}
               onChange={(e) => setFormData({ ...formData, captain: e.target.value })}
-              className="w-full px-4 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-lg"
+              className="w-full px-4 py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all text-lg bg-white text-gray-900 placeholder-gray-500"
               placeholder="Enter captain name"
             />
           </div>
