@@ -28,11 +28,43 @@ export default function LiveScoringPage() {
 
   const fetchMatchDetails = async () => {
     try {
-      const response = await fetch(`https://cricklog-2dk4.vercel.app/api/matches/${matchId}`)
-      const data = await response.json()
+      // First try to get match from matches API
+      let response = await fetch(`https://cricklog-2dk4.vercel.app/api/matches/${matchId}`)
+      let data = await response.json()
       
       if (data.success) {
         setMatch(data.data)
+        return
+      }
+      
+      // If match not found in matches API, try scoring API
+      response = await fetch(`https://cricklog-2dk4.vercel.app/api/scoring/${matchId}`)
+      data = await response.json()
+      
+      if (data.success) {
+        setMatch(data.data)
+        return
+      }
+      
+      // If still not found, create a test match
+      response = await fetch(`https://cricklog-2dk4.vercel.app/api/scoring/${matchId}/create-test`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          team1_name: 'Team 1',
+          team2_name: 'Team 2',
+          venue: 'Test Stadium'
+        })
+      })
+      
+      data = await response.json()
+      
+      if (data.success) {
+        setMatch(data.data)
+      } else {
+        console.error('Failed to create test match:', data.message)
       }
     } catch (error) {
       console.error('Error fetching match:', error)

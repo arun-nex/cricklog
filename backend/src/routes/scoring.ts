@@ -10,6 +10,84 @@ let balls: Ball[] = [];
 let inningsIdCounter = 1;
 let ballIdCounter = 1;
 
+// Helper function to get or create a match
+const getOrCreateMatch = (matchId: string): Match => {
+  let match = matches.find(m => m.id === matchId);
+  
+  if (!match) {
+    // Create a dummy match for testing if not found
+    match = {
+      id: matchId,
+      team1_id: 'team1-id',
+      team2_id: 'team2-id',
+      team1_name: 'Team 1',
+      team2_name: 'Team 2',
+      venue: 'Test Stadium',
+      date: new Date(),
+      match_type: 'T20',
+      overs_per_innings: 20,
+      innings: [],
+      status: 'live',
+      created_at: new Date(),
+      updated_at: new Date(),
+    };
+    matches.push(match);
+  }
+  
+  return match;
+};
+
+// Create test match for scoring
+router.post('/:matchId/create-test', (req, res) => {
+  try {
+    const { matchId } = req.params;
+    const { team1_name, team2_name, venue } = req.body;
+    
+    const match = getOrCreateMatch(matchId);
+    
+    // Update match with provided data
+    if (team1_name) match.team1_name = team1_name;
+    if (team2_name) match.team2_name = team2_name;
+    if (venue) match.venue = venue;
+    
+    match.status = 'live';
+    match.updated_at = new Date();
+    
+    res.json({
+      success: true,
+      message: 'Test match created successfully',
+      data: match
+    });
+  } catch (error) {
+    console.error('Error creating test match:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to create test match',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
+// Get match details
+router.get('/:matchId', (req, res) => {
+  try {
+    const { matchId } = req.params;
+    const match = getOrCreateMatch(matchId);
+    
+    res.json({
+      success: true,
+      data: match
+    });
+  } catch (error) {
+    console.error('Error fetching match:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch match',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
+});
+
 // Start innings for a match
 router.post('/:matchId/innings/start', (req, res) => {
   try {
@@ -23,14 +101,8 @@ router.post('/:matchId/innings/start', (req, res) => {
       });
     }
 
-    // Check if match exists and is live
-    const match = matches.find(m => m.id === matchId);
-    if (!match) {
-      return res.status(404).json({
-        success: false,
-        message: 'Match not found'
-      });
-    }
+    // Get or create match
+    const match = getOrCreateMatch(matchId);
 
     if (match.status !== 'live') {
       return res.status(400).json({
