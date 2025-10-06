@@ -58,6 +58,7 @@ import matchesRouter from './routes/matches';
 import scoringRouter from './routes/scoring';
 import playerStatsRouter from './routes/playerStats';
 import matchHistoryRouter from './routes/matchHistory';
+import authRouter from './routes/auth';
 
 // API routes
 app.get('/api/health', (req, res) => {
@@ -94,6 +95,9 @@ app.use('/api/player-stats', playerStatsRouter);
 
 // Match history routes
 app.use('/api/match-history', matchHistoryRouter);
+
+// Authentication routes
+app.use('/api/auth', authRouter);
 
 // Initialize WebSocket service
 const wsService = new WebSocketService(server);

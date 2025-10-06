@@ -1,9 +1,11 @@
 'use client'
 
 import { useState } from 'react'
+import { useAuth } from '@/contexts/AuthContext'
 
 export default function Home() {
   const [isConnected, setIsConnected] = useState(false)
+  const { user, isAuthenticated, logout } = useAuth()
 
   const testConnection = async () => {
     try {
@@ -111,6 +113,40 @@ export default function Home() {
                     </a>
                   </div>
             </div>
+
+            {isAuthenticated && user && (
+              <div className="mt-6 p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-white font-semibold">Welcome, {user.full_name}!</p>
+                    <p className="text-white/70 text-sm">Role: {user.role}</p>
+                  </div>
+                  <button
+                    onClick={logout}
+                    className="bg-red-500/20 text-red-300 px-4 py-2 rounded-lg hover:bg-red-500/30 transition-colors"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {!isAuthenticated && (
+              <div className="mt-6 space-y-3">
+                <a
+                  href="/auth/login"
+                  className="w-full bg-white text-primary-600 py-2 px-4 rounded-lg border-2 border-primary-600 hover:bg-primary-50 transition-colors block text-center"
+                >
+                  🔐 Sign In
+                </a>
+                <a
+                  href="/auth/register"
+                  className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors block text-center"
+                >
+                  📝 Sign Up
+                </a>
+              </div>
+            )}
 
             <div className="text-xs text-gray-500 mt-4">
               <p>API URL: https://cricklog-2dk4.vercel.app</p>
