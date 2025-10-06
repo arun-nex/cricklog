@@ -52,6 +52,7 @@ import teamsRouter from './routes/teams';
 import matchesRouter from './routes/matches';
 import scoringRouter from './routes/scoring';
 import playerStatsRouter from './routes/playerStats';
+import matchHistoryRouter from './routes/matchHistory';
 
 // API routes
 app.get('/api/health', (req, res) => {
@@ -85,6 +86,9 @@ app.use('/api/scoring', scoringRouter);
 
 // Player statistics routes
 app.use('/api/player-stats', playerStatsRouter);
+
+// Match history routes
+app.use('/api/match-history', matchHistoryRouter);
 
 // 404 handler
 app.use('*', (req, res) => {
