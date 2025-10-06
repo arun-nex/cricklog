@@ -2,12 +2,17 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
+import { createServer } from 'http';
+import WebSocketService from './services/WebSocketService';
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
 const PORT = process.env.API_PORT || 4000;
+
+// Create HTTP server
+const server = createServer(app);
 
 // Middleware
 app.use(helmet());
@@ -90,6 +95,37 @@ app.use('/api/player-stats', playerStatsRouter);
 // Match history routes
 app.use('/api/match-history', matchHistoryRouter);
 
+// Initialize WebSocket service
+const wsService = new WebSocketService(server);
+
+// Real-time stats endpoint
+app.get('/api/realtime/stats', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.json({
+    success: true,
+    data: wsService.getStats()
+  });
+});
+
+// Real-time connections endpoint
+app.get('/api/realtime/connections', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.json({
+    success: true,
+    data: wsService.getConnections()
+  });
+});
+
+// Real-time events endpoint
+app.get('/api/realtime/events/:matchId?', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  const { matchId } = req.params;
+  res.json({
+    success: true,
+    data: wsService.getEventHistory(matchId)
+  });
+});
+
 // 404 handler
 app.use('*', (req, res) => {
   res.status(404).json({
@@ -108,10 +144,13 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 // Start server
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`🚀 Cricklog API server running on port ${PORT}`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`📊 Health check: http://localhost:${PORT}/health`);
+  console.log(`⚡ WebSocket service initialized`);
 });
 
+// Export WebSocket service for use in other modules
+export { wsService };
 export default app;
